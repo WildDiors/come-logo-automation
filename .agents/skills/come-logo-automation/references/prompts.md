@@ -63,7 +63,7 @@ Revert to the exact selected black-and-white draft. Restore every original conto
 
 ## Invocation checks
 
-- `$rainbow-script-logo AXC9` → target is `AXC9`; generate four separate black-and-white variants.
-- `使用 $rainbow-script-logo 生成 Logo：M3` → target is `M3`; never generate `COME`.
-- `$rainbow-script-logo RS9，6张，不要尾划` → target is `RS9`; generate six separate black-and-white variants without swashes.
+- `$come-logo-automation AXC9` → target is `AXC9`; generate four separate black-and-white variants.
+- `使用 $come-logo-automation 生成 Logo：M3` → target is `M3`; never generate `COME`.
+- `$come-logo-automation RS9，6张，不要尾划` → target is `RS9`; generate six separate black-and-white variants without swashes.
 - `B，通过上色` → edit only方案 B into the color stage.

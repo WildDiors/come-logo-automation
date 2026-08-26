@@ -1,9 +1,9 @@
 ---
-name: rainbow-script-logo
-description: "Generate 4–6 distinct flat-white-on-black brush-script wordmark structure drafts from an exact English-letter or digit logo name, then color only the selected approved draft. Use when the user explicitly invokes $rainbow-script-logo, clicks the 彩虹书写体 Logo skill and types only a name such as AXC9, or asks to create, revise, select, approve, or color this specific logo style. Never substitute a sample word for the user's text."
+name: come-logo-automation
+description: "Automate COME co-publishing wordmark design by generating 4–6 distinct flat-white-on-black brush-script structure drafts from an exact English-letter or digit logo name, then coloring only the selected approved draft. Use when the user explicitly invokes $come-logo-automation, clicks the COME联运logo自动化 skill and types only a name such as AXC9, or asks to create, revise, select, approve, or color this specific logo style. Never substitute a sample word for the user's text."
 ---
 
-# Rainbow Script Logo
+# COME 联运 Logo 自动化
 
 Create an exact wordmark through a two-stage approval-gated workflow. Keep the interaction brief and make the images the main deliverable.
 
@@ -18,7 +18,7 @@ Create an exact wordmark through a two-stage approval-gated workflow. Keep the i
 
 Determine the target before doing anything else:
 
-1. If the message contains `Logo:` / `Logo：` / `生成：`, extract the first contiguous `[A-Za-z0-9]+` token after the final such prefix. Otherwise, extract the first such token after `$rainbow-script-logo` or the skill chip. Treat later text such as `6张` or `不要尾划` as modifiers, not part of the target. A message containing only a short letter-and-digit string is the target.
+1. If the message contains `Logo:` / `Logo：` / `生成：`, extract the first contiguous `[A-Za-z0-9]+` token after the final such prefix. Otherwise, extract the first such token after `$come-logo-automation` or the skill chip. Treat later text such as `6张` or `不要尾划` as modifiers, not part of the target. A message containing only a short letter-and-digit string is the target.
 2. Treat the extracted target as exact and case-sensitive. Preserve every letter, digit, order, and capitalization.
 3. There is no default target. `COME`, `Come`, and text visible in reference assets are examples only; never generate them unless the user explicitly requests that exact text.
 4. If there is exactly one plausible `A-Z`, `a-z`, `0-9` target, start Stage 1 immediately. Do not ask for confirmation, size, style, palette, or composition.

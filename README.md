@@ -1,10 +1,10 @@
-# Come Logo Skills
+# COME联运logo自动化
 
 团队共享的 Codex Logo 生成 Skill。
 
 ## 包含的 Skill
 
-### `rainbow-script-logo`
+### `come-logo-automation`
 
 根据内置参考图生成黑底彩虹书写体英文或数字 Logo，严格分为两个阶段：
 
@@ -18,13 +18,13 @@
 克隆本仓库，并在仓库目录中打开 Codex。Codex 会自动扫描：
 
 ```text
-.agents/skills/rainbow-script-logo/
+.agents/skills/come-logo-automation/
 ```
 
 调用示例：
 
 ```text
-$rainbow-script-logo M3
+$come-logo-automation M3
 ```
 
 或点击技能后，在自动出现的短提示后直接输入：
@@ -46,7 +46,7 @@ B，通过上色
 如果希望在其他所有仓库中使用，可将完整目录复制到：
 
 ```text
-$HOME/.agents/skills/rainbow-script-logo/
+$HOME/.agents/skills/come-logo-automation/
 ```
 
 请保留 `SKILL.md`、`agents/`、`assets/` 和 `references/` 的目录结构。
