@@ -1,6 +1,6 @@
 # Rainbow brush-script style system
 
-Use these rules for both generation stages. The two-stage separation is an invariant, not a suggestion.
+Use these rules for both generation stages. The two-stage separation and exact requested text are invariants, not suggestions. Text visible in the bundled references is never an input value.
 
 ## Shared structure
 
@@ -37,6 +37,8 @@ Stage 1 approval checks:
 3. Brush-script construction matches the reference family.
 4. Capital, spacing, ligatures, counters, baseline, and swash are intentional.
 5. The mark is centered and uncropped.
+6. The image contains one option only, with no label or contact-sheet layout.
+7. The lettering is flat filled white, not an outline, pencil sketch, or construction drawing.
 
 ## Stage 2 appearance
 
@@ -74,4 +76,3 @@ Stage 2 approval checks:
 3. Gradient runs blue → cyan → green → yellow → orange → red-orange across the whole mark.
 4. Highlights and dark edges follow the specified lighting direction.
 5. Spelling and readability remain unchanged at thumbnail size.
-
