@@ -6,4 +6,4 @@ interface:
   brand_color: "#1479F8"
   default_prompt: "使用 $rainbow-script-logo 生成 Logo："
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
