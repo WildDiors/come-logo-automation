@@ -1,10 +1,10 @@
 # Rainbow brush-script style system
 
-Use these rules for exploration, revision, locking, and rendering. Exact requested text, explicit structure approval, and black-by-default backgrounds are invariants.
+Use these rules for exploration, revision, locking, and rendering. Exact normalized text, explicit structure approval, and black-by-default backgrounds are invariants.
 
 ## Invariants
 
-1. Render the exact case-sensitive target once. Reference-image text is never an input value.
+1. Render the exact normalized target once: the first English letter is uppercase and every subsequent English letter is lowercase, regardless of input capitalization. Preserve digits and character order. Reference-image text is never an input value.
 2. Keep structural work flat solid white on pure black until the user explicitly locks it and asks to render.
 3. Selecting a draft is not approval. Structural modification language always returns to black-and-white revision.
 4. Preserve all unmentioned geometry during revision and honor explicit local locks.
@@ -16,7 +16,7 @@ Use these rules for exploration, revision, locking, and rendering. Exact request
 - Form: bold custom brush-script wordmark with connected cursive rhythm.
 - Slant: moderate right slant, approximately 8–15 degrees.
 - Stroke: substantial weight, visible thick/thin contrast, rounded terminals, clean internal counters.
-- Capital: the first capital is expressive and approximately 1.20–1.35 times the remaining height.
+- Capital: the first English letter must use an uppercase glyph; all subsequent English letters must use lowercase glyphs. The initial capital is expressive and approximately 1.20–1.35 times the remaining height.
 - Spacing: compact and flowing, with controlled overlaps that never create ambiguous characters.
 - Swash: optional and integrated; one main swash is preferred. It must not cover letters or touch the frame.
 - Composition: front-facing, centered, generous margins, no mockup or perspective.
@@ -63,7 +63,7 @@ When the user specifies locks, those locks override all default balancing adjust
 
 ### Structure approval checks
 
-1. Exact case-sensitive spelling appears once.
+1. Exact normalized spelling appears once: the first English glyph is uppercase, every subsequent English glyph is lowercase, and digits are unchanged. An enlarged lowercase initial or all-capital lettering fails this check.
 2. Every character is identifiable.
 3. Brush-script construction matches the requested reference-family direction.
 4. Capital, spacing, ligatures, counters, baseline, and swash are intentional.

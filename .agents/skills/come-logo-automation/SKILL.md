@@ -1,6 +1,6 @@
 ---
 name: come-logo-automation
-description: "Create and iteratively revise COME co-publishing brush-script wordmarks from exact English letters or digits. Generate separate flat-white-on-black structure drafts, let the user select, combine, lock, or repeatedly edit any draft, and render color only after explicit structure approval. Use when the user invokes $come-logo-automation or asks to create, revise, approve, recolor, or render this specific logo style. Never substitute sample text or infer approval from a draft selection."
+description: "Create and iteratively revise COME co-publishing brush-script wordmarks from English letters or digits, always with the first English letter uppercase and all subsequent letters lowercase. Generate separate flat-white-on-black structure drafts, let the user select, combine, lock, or repeatedly edit any draft, and render color only after explicit structure approval. Use when the user invokes $come-logo-automation or asks to create, revise, approve, recolor, or render this specific logo style. Never substitute sample text or infer approval from a draft selection."
 ---
 
 # COME 联运 Logo 自动化
@@ -20,10 +20,12 @@ Determine the target before generating a new wordmark:
 
 1. If the message contains `Logo:` / `Logo：` / `生成：`, extract the first contiguous `[A-Za-z0-9]+` token after the final such prefix. Otherwise, extract the first such token after `$come-logo-automation` or the skill chip. Treat later text such as `6张`, `更宽`, or `不要尾划` as modifiers.
 2. A message containing only one short letter-and-digit string is the target.
-3. Preserve the exact spelling, order, case, and digits. `COME`, `Come`, and words visible in reference images are examples only.
+3. Preserve spelling, character order, and digits, but always normalize letter case before generating: lowercase every English letter, then uppercase only the first English letter. This is a fixed design rule for lowercase, uppercase, and mixed-case input, not an optional style direction. For example, `drem`, `DREM`, and `dReM` all become `Drem`; `AXC9` becomes `Axc9`; `9ABC` becomes `9Abc`; digits-only names stay unchanged. Do not capitalize again after a digit. `COME`, `Come`, and words visible in reference images are examples only.
 4. If exactly one plausible target exists, begin exploration immediately. Do not ask for confirmation, palette, material, or composition.
 5. If no target exists, ask only: `请输入要生成的 Logo 名称。`
 6. If multiple targets conflict, ask which exact target to use. Never combine or guess.
+
+Use the normalized name as the sole target in every prompt, revision, combination, lock check, and render. “Exact text” and “preserve case” mean this normalized target, never the raw input. Keep a visibly uppercase first English glyph and lowercase subsequent English glyphs in every direction; a larger lowercase initial or all-capital lettering does not qualify. When users name glyphs in uppercase for local edits or locks, map them to their positions in the normalized target without changing case.
 
 If an unsupported character materially affects the wordmark, ask before removing or replacing it.
 
@@ -52,7 +54,7 @@ Generate four separate variants by default. Generate five or six only when reque
 - Forbid color, gradient, lighting, rendering, gray construction lines, labels, frames, and mockups.
 - Ensure each image contains one centered, uncropped wordmark with safe margins.
 
-Inspect every output. If a variant misspells, substitutes, duplicates, omits, or reorders a character, retry only that variant once with the exact-text correction prompt. Do not present an incorrect draft as valid.
+Inspect every output. If a variant uses incorrect capitalization, misspells, substitutes, duplicates, omits, or reorders a character, retry only that variant once with the exact-text correction prompt. Do not present an incorrect draft as valid.
 
 Label outputs in the message as `方案 A` through `方案 D` and continue as needed. After initial exploration say only:
 
@@ -89,7 +91,7 @@ Do not suggest coloring while the user is dissatisfied or revising.
 
 ## Lock — structure approval
 
-Before locking, inspect the chosen image against the black-and-white approval checks in `references/style-system.md`. If it is misspelled, ambiguous, cropped, colored, or otherwise invalid, correct that defect before accepting the lock.
+Before locking, inspect the chosen image against the black-and-white approval checks in `references/style-system.md`. If it has incorrect capitalization, is misspelled, ambiguous, cropped, colored, or otherwise invalid, correct that defect before accepting the lock. For a previously locked or colored image with incorrect capitalization, return to black-and-white revision and obtain a new structure lock before rendering; never preserve incorrect case just to honor the old geometry.
 
 When the user locks without asking to render, preserve the exact image as the immutable geometry source and say:
 

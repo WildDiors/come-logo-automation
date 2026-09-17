@@ -1,6 +1,6 @@
 # Generation and edit prompts
 
-Replace placeholders exactly. Preserve capitalization and digits. Never replace `{TEXT}` with text visible in a reference image.
+Before replacing placeholders, normalize the requested name using the rule in `SKILL.md`: uppercase only the first English letter and lowercase every subsequent English letter; preserve character order and digits. Set `{TEXT}` to that normalized name in every template, including revisions and retries. “Exact” and “verbatim” refer to this normalized text, not input capitalization. Never replace `{TEXT}` with text visible in a reference image. Render templates require a locked image that already passes this case check.
 
 ## 1. Initial black-and-white exploration
 
@@ -14,7 +14,7 @@ Input images: lettering-style references only. Never copy reference text, color,
 Scene/backdrop: solid pure black #000000.
 Style/medium: bold custom brush-script wordmark, clean vector-like filled silhouette.
 Text (verbatim): "{TEXT}"
-Exact-text check: render these characters once, in this exact order and case: {TEXT}.
+Exact-text check: render these characters once, in this exact order and case: {TEXT}. Use a visibly uppercase first English letter and lowercase forms for every subsequent English letter; preserve digits. An enlarged lowercase initial is not an uppercase letter.
 User-wide modifiers: {MODIFIERS}
 Constraints: one centered wordmark only; flat solid white #FFFFFF filled lettering; open black counters; clean edges; front-facing; at least 10% safe margin; fully readable at thumbnail size.
 Avoid: any word seen in the references; alternate spelling; missing, substituted, duplicated, or reordered characters; gray values; sketch lines; construction guides; outlines-only lettering; color; gradient; highlight; shadow; bevel; gloss; glow; texture; 3D depth; labels; option letters; captions; frames; badges; scenery; perspective; watermark; cropped swashes; colored or gradient background.
@@ -23,7 +23,7 @@ Avoid: any word seen in the references; alternate spelling; missing, substituted
 Append one direction per separate call:
 
 - **方案 A — compact:** `Compact emblem-like composition, controlled connections, shortest practical swash, strongest small-size readability.`
-- **方案 B — expressive capital:** `More expressive first character, approximately 1.25 times the remaining character height, balanced by a restrained terminal.`
+- **方案 B — expressive capital:** `More expressive first uppercase letter (all subsequent letters stay lowercase), approximately 1.25 times the remaining character height, balanced by a restrained terminal.`
 - **方案 C — continuous rhythm:** `Stronger continuous cursive rhythm and elegant ligatures, while every character remains unmistakable.`
 - **方案 D — signature swash:** `Refined signature-like construction with one integrated lower swash that supports rather than crosses the text.`
 - **方案 E — upright:** `Slightly more upright and geometric rhythm, reduced overlap, disciplined spacing.`
@@ -34,7 +34,7 @@ If a user modifier conflicts with a direction, the user's modifier wins. For exa
 ## 2. Exact-text retry
 
 ```text
-Regenerate only this invalid black-and-white variant. The required text is exactly "{TEXT}" and must appear once. Copy the sequence character by character: {TEXT}. Do not use, copy, or retain any word visible in the reference images. Keep the intended structural direction and all valid user modifiers. Use a pure black #000000 background and flat solid white #FFFFFF filled lettering. No gray sketch lines, outlines, color, rendering, labels, mockup, colored background, or gradient background.
+Regenerate only this invalid black-and-white variant. The required text is exactly "{TEXT}" and must appear once. Copy the sequence character by character, including case: {TEXT}. Correct any lowercase initial or uppercase subsequent letter: only the first English letter is uppercase, all following letters are lowercase, and digits remain unchanged. Do not use, copy, or retain any word visible in the reference images. Keep the intended structural direction and all valid user modifiers. Use a pure black #000000 background and flat solid white #FFFFFF filled lettering. No gray sketch lines, outlines, color, rendering, labels, mockup, colored background, or gradient background.
 ```
 
 ## 3. Single revision with locked properties
@@ -61,8 +61,8 @@ Examples of parsing:
   - `{CHANGES}` = `Reduce the first character by approximately 15%; shorten the terminal swash.`
   - `{LOCKS}` = `All other glyphs, spacing, slant, baseline, scale, and composition.`
 - `锁定 A 和 X，只修改 C9`
-  - `{CHANGES}` = `Modify only the C and 9 as specified by the user.`
-  - `{LOCKS}` = `The A and X contours and positions, plus all unmentioned geometry.`
+  - `{CHANGES}` = `Modify only the c and 9 in the normalized target as specified by the user.`
+  - `{LOCKS}` = `The A and x contours and positions in the normalized target, plus all unmentioned geometry.`
 
 ## 4. Combine selected options
 
@@ -147,12 +147,16 @@ Revert to the exact locked black-and-white draft. Restore every original contour
 
 ## Behavior checks
 
-- `$come-logo-automation AXC9` → generate four separate black-and-white variants.
-- `$come-logo-automation RS9，6张，不要尾划` → generate six separate black-and-white variants without swashes.
+- `drem`, `DREM`, `dReM`, or `Drem` → every variant reads `Drem`, with an uppercase D and lowercase rem.
+- `a` → `A`; `9ABC` → `9Abc`; `a9BC` → `A9bc`; `123` → `123`.
+- A draft reading `drem` or `DREM` for target `Drem` → invalid capitalization; retry that variant before presenting or locking it.
+
+- `$come-logo-automation AXC9` → generate four separate black-and-white variants reading `Axc9`.
+- `$come-logo-automation RS9，6张，不要尾划` → generate six separate black-and-white variants reading `Rs9` without swashes.
 - `B` → select B only; do not color.
 - `选 B，但首字母缩小15%，尾划缩短` → edit B in black and white; do not color.
 - `保留 B 主体，使用 D 的尾划` → create a black-and-white combined revision.
-- `锁定 A 和 X，只改 C9` → preserve A and X exactly and revise only C9.
+- `锁定 A 和 X，只改 C9` → for target `Axc9`, preserve A and x exactly and revise only c9; glyph identifiers do not override normalized case.
 - `结构确认` → lock the current black-and-white draft; do not color yet.
 - `B，通过上色` → select B, lock it, and apply default wordmark rendering on black.
 - `按参考图渲染` → reference the wordmark material only; background stays black.
